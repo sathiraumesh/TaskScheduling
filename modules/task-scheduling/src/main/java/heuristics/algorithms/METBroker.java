@@ -71,7 +71,7 @@ public class METBroker extends BaseBroker {
 
             }
 
-            bindCloudletToVm(cloudlet, minCVm);
+            bindCloudletToVm(clist.get(cloudlet).getCloudletId(), minCVm);
 
 
             for (int j = 0; j <vlist.size() ; j++) {

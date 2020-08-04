@@ -26,10 +26,13 @@ public class Infrastructure{
         int mips = 4000;
 
         // 3. Create PEs and add these into a list.
-        peList.add(new Pe(0, new PeProvisionerSimple(mips))); // need to store Pe id and MIPS Rating
-        peList.add(new Pe(1, new PeProvisionerSimple(mips)));
-        peList.add(new Pe(2, new PeProvisionerSimple(mips)));
-        peList.add(new Pe(3, new PeProvisionerSimple(mips)));
+        for (int i = 0; i <128 ; i++) {
+            peList.add(new Pe(i, new PeProvisionerSimple(mips)));
+        }
+       // need to store Pe id and MIPS Rating
+//        peList.add(new Pe(1, new PeProvisionerSimple(mips)));
+//        peList.add(new Pe(2, new PeProvisionerSimple(mips)));
+//        peList.add(new Pe(3, new PeProvisionerSimple(mips)));
 
         //4. Create Host with its id and list of PEs and add them to the list of machines
         int hostId=0;
@@ -98,9 +101,9 @@ public class Infrastructure{
                 4000, 4000, 4000, 4000, 4000
         };
         long size = 1000; //image size (MB)
-        int ram = 512; //vm memory (MB)
+        int ram = 1024; //vm memory (MB)
         long bw = 1000;
-        int[] pesNumber = {1,1,2,3,2,1,2,2,3,1,1,1,2,3,1,1,1,2,3,1}; //number of cpus
+        int[] pesNumber = {128,128,128,128,128,128,128,128,128,128,128,128,128,128,128,128,128,128,128,128}; //number of cpus
         String vmm = "Xen"; //VMM name
 
 

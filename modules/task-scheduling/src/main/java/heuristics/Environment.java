@@ -41,11 +41,11 @@ public class Environment {
             Datacenter datacenter0 = inf.createUserDatacenter("Data_Center_0");
 
             //Third step: Create Broker
-            BaseBroker broker = cli.createBroker(Client.Algorithm.TRETA);
+            BaseBroker broker = cli.createBroker(Client.Algorithm.);
             int brokerId = broker.getId();
 
             //Fourth step: Create one virtual machine
-            vmlist = inf.createRequiredVms(4,brokerId);
+            vmlist = inf.createRequiredVms(20,brokerId);
 
 
             //submit vm list to the broker
@@ -53,7 +53,7 @@ public class Environment {
 
 
             //Fifth step: Create two Cloudlets
-            cloudletList = cli.createUserCloudlet(100,brokerId,"100");
+            cloudletList = cli.createUserCloudletWorkload(brokerId,100);
 
             //submit cloudlet list to the broker
             broker.submitCloudletList(cloudletList);

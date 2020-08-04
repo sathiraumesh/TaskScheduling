@@ -5,6 +5,7 @@ import org.cloudbus.cloudsim.Cloudlet;
 import org.cloudbus.cloudsim.DatacenterBroker;
 import org.cloudbus.cloudsim.UtilizationModel;
 import org.cloudbus.cloudsim.UtilizationModelFull;
+import org.cloudbus.cloudsim.util.WorkloadFileReader;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,7 +19,8 @@ public class Client {
         MINMIN,
         FCFS,
         TRETA,
-        MET
+        MET,
+        MCT
 
     }
     public BaseBroker createBroker(Algorithm alg){
@@ -40,6 +42,9 @@ public class Client {
                     break;
                 case MET:
                     broker= new METBroker("METBroker");
+                    break;
+                case MCT:
+                    broker= new MCTBroker("MCTBroker");
                     break;
                 default:
                     broker =new FCFSBroker("FCFSBroker");;
@@ -82,6 +87,31 @@ public class Client {
         System.out.println("SUCCESSFULLY Cloudletlist created :)");
 
         return cloudletList;
+
+    }
+
+
+    public  ArrayList<Cloudlet> createUserCloudletWorkload(int brokerId,int tasks){
+        WorkloadFileReader wfr= null;
+        try {
+            wfr = new WorkloadFileReader("NASA-iPSC-1993-3.1-cln.swf", 1);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<Cloudlet> cloudletList  = new ArrayList<>(wfr.generateWorkload());
+        ArrayList<Cloudlet> required = new ArrayList<>();
+
+        for (int i = 0; i <tasks ; i++) {
+            cloudletList.get(i).setUserId(brokerId);
+            required.add(cloudletList.get(i));
+        }
+        System.out.println("SUCCESSFULLY Cloudletlist created :)");
+        return required;
+
+
+
+
 
     }
 

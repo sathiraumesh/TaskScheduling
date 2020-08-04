@@ -79,7 +79,7 @@ public class MinMinBroker extends BaseBroker {
             }
 
 
-            bindCloudletToVm(minCloudlet, minVm);
+            bindCloudletToVm(clist.get(minCloudlet).getCloudletId(), minVm);
 
 
 
@@ -101,7 +101,7 @@ public class MinMinBroker extends BaseBroker {
     private double getCompletionTime(Cloudlet cloudlet, Vm vm) {
 
         double waitingTime = cloudlet.getWaitingTime();
-        double execTime = cloudlet.getCloudletLength() / (vm.getMips() * vm.getNumberOfPes());
+        double execTime = cloudlet.getCloudletLength()*cloudlet.getNumberOfPes() / (vm.getMips() * vm.getNumberOfPes());
 
         double completionTime = execTime + waitingTime;
 
@@ -109,6 +109,6 @@ public class MinMinBroker extends BaseBroker {
     }
 
     private double getExecTime(Cloudlet cloudlet, Vm vm) {
-        return cloudlet.getCloudletLength() / (vm.getMips() * vm.getNumberOfPes());
+        return cloudlet.getCloudletLength()*cloudlet.getNumberOfPes() / (vm.getMips() * vm.getNumberOfPes());
     }
 }
