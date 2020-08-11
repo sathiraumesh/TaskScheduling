@@ -7,6 +7,7 @@ import org.cloudbus.cloudsim.Log;
 import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.core.CloudSim;
 
+import java.io.*;
 import java.util.Calendar;
 import java.util.List;
 
@@ -22,8 +23,27 @@ public class Environment {
 
     private static Client cli = new Client();
 
+    private static String algo ="Max";
+    public static void main(String[] args) throws IOException {
 
-    public static void main(String[] args) {
+        File Mfout = new File(algo+"/"+"makespan.txt");
+        FileOutputStream Mfos = new FileOutputStream(Mfout);
+        BufferedWriter Mbw = new BufferedWriter(new OutputStreamWriter(Mfos));
+
+//        File Cfout = new File(algo+"/"+"cost");
+//        FileOutputStream Cfos = new FileOutputStream(Cfout);
+//        BufferedWriter Cbw = new BufferedWriter(new OutputStreamWriter(Cfos));
+
+        File Tfout = new File(algo+"/"+"through.txt");
+        FileOutputStream Tfos = new FileOutputStream(Tfout);
+        BufferedWriter Tbw = new BufferedWriter(new OutputStreamWriter(Tfos));
+
+        File Dfout = new File(algo+"/"+"Di.txt");
+        FileOutputStream Dfos = new FileOutputStream(Dfout);
+        BufferedWriter Dbw = new BufferedWriter(new OutputStreamWriter(Dfos));
+
+        for (int i = 1000; i <=10000 ; i+=1000) {
+
 
         try {
             // First step: Initialize the CloudSim package. It should be called
@@ -41,7 +61,7 @@ public class Environment {
             Datacenter datacenter0 = inf.createUserDatacenter("Data_Center_0");
 
             //Third step: Create Broker
-            BaseBroker broker = cli.createBroker(Client.Algorithm.);
+            BaseBroker broker = cli.createBroker(Client.Algorithm.MAXMIN);
             int brokerId = broker.getId();
 
             //Fourth step: Create one virtual machine
@@ -53,7 +73,7 @@ public class Environment {
 
 
             //Fifth step: Create two Cloudlets
-            cloudletList = cli.createUserCloudletWorkload(brokerId,100);
+            cloudletList = cli.createUserCloudletWorkload(brokerId,i);
 
             //submit cloudlet list to the broker
             broker.submitCloudletList(cloudletList);
@@ -78,13 +98,33 @@ public class Environment {
              Metrics.calculateMakeSpan(resultList);
              Metrics.calculateThrougput(resultList);
 
+            String mak=    Metrics.calculateMakeSpan(resultList);
+
+            String di=   Metrics.calculateDegreeofImbalnce(resultList,vmist);
+            String thr = Metrics.calculateThrougput(resultList);
+            Mbw.write(mak);
+
+            Dbw.write(mak);
+            Tbw.write(thr);
+
+            Mbw.newLine();
+
+            Dbw.newLine();
+            Tbw.newLine();
 
 
+         }
 
-        }
         catch (Exception e) {
             e.printStackTrace();
             Log.printLine("The simulation has been terminated due to an unexpected error");
         }
+
+        }
+
+       Mbw.close();
+        Dbw.close();
+        Tbw.close();
+
     }
 }

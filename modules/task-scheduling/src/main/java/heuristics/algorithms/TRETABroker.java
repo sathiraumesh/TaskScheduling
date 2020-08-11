@@ -45,7 +45,7 @@ public class TRETABroker extends BaseBroker {
 
 
                 double usage = resourceUsage.get(vm);
-                double cpu = cloudlet.getCloudletLength()*cloudlet.getNumberOfPes() / vm.getCurrentRequestedTotalMips();
+                double cpu = cloudlet.getCloudletLength() / vm.getMips();
                 max = Math.min(cpu + usage, max);
                 if (max != temp) {
                     selectedVm = vm;
@@ -53,7 +53,7 @@ public class TRETABroker extends BaseBroker {
 
             }
 
-            resourceUsage.put(selectedVm, resourceUsage.get(selectedVm) + cloudlet.getCloudletLength()*cloudlet.getNumberOfPes() / selectedVm.getCurrentRequestedTotalMips());
+            resourceUsage.put(selectedVm, resourceUsage.get(selectedVm) + cloudlet.getCloudletLength()/ selectedVm.getMips());
             bindCloudletToVm(cloudlet.getCloudletId(), selectedVm.getId());
 
         }
