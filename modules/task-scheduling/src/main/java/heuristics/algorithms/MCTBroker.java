@@ -88,7 +88,7 @@ public class MCTBroker extends BaseBroker{
         double waitingTime = cloudlet.getWaitingTime();
         double execTime = cloudlet.getCloudletLength() / (vm.getMips());
 
-        double completionTime = execTime + waitingTime;
+        double completionTime = execTime +0.0;
 
         return completionTime;
     }

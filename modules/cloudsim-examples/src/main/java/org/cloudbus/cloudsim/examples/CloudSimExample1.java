@@ -97,7 +97,7 @@ public class CloudSimExample1 {
 			long size = 10000; // image size (MB)
 			int ram = 512; // vm memory (MB)
 			long bw = 1000;
-			int pesNumber = 1; // number of cpus
+			int pesNumber = 2; // number of cpus
 			String vmm = "Xen"; // VMM name
 
 			// create VM
@@ -120,7 +120,7 @@ public class CloudSimExample1 {
 			UtilizationModel utilizationModel = new UtilizationModelFull();
 
 			Cloudlet cloudlet = 
-                                new Cloudlet(id, length, pesNumber, fileSize, 
+                                new Cloudlet(id, length, 1, fileSize,
                                         outputSize, utilizationModel, utilizationModel, 
                                         utilizationModel);
 			cloudlet.setUserId(brokerId);
@@ -170,6 +170,7 @@ public class CloudSimExample1 {
 
 		// 3. Create PEs and add these into a list.
 		peList.add(new Pe(0, new PeProvisionerSimple(mips))); // need to store Pe id and MIPS Rating
+		peList.add(new Pe(1, new PeProvisionerSimple(mips)));
 
 		// 4. Create Host with its id and list of PEs and add them to the list
 		// of machines

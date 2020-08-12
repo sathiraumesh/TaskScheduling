@@ -23,9 +23,8 @@ public class Environment {
 
     private static Client cli = new Client();
 
-    private static String algo ="Max";
+    private static String algo ="MCT";
     public static void main(String[] args) throws IOException {
-
         File Mfout = new File(algo+"/"+"makespan.txt");
         FileOutputStream Mfos = new FileOutputStream(Mfout);
         BufferedWriter Mbw = new BufferedWriter(new OutputStreamWriter(Mfos));
@@ -42,7 +41,7 @@ public class Environment {
         FileOutputStream Dfos = new FileOutputStream(Dfout);
         BufferedWriter Dbw = new BufferedWriter(new OutputStreamWriter(Dfos));
 
-        for (int i = 1000; i <=10000 ; i+=1000) {
+        for (int i = 1000; i <=18000 ; i+=3000) {
 
 
         try {
@@ -61,7 +60,7 @@ public class Environment {
             Datacenter datacenter0 = inf.createUserDatacenter("Data_Center_0");
 
             //Third step: Create Broker
-            BaseBroker broker = cli.createBroker(Client.Algorithm.MAXMIN);
+            BaseBroker broker = cli.createBroker(Client.Algorithm.MCT);
             int brokerId = broker.getId();
 
             //Fourth step: Create one virtual machine
@@ -104,7 +103,7 @@ public class Environment {
             String thr = Metrics.calculateThrougput(resultList);
             Mbw.write(mak);
 
-            Dbw.write(mak);
+            Dbw.write(di);
             Tbw.write(thr);
 
             Mbw.newLine();
